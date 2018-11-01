@@ -11,7 +11,11 @@ soup = BeautifulSoup (r.content,features="html5lib")
 text = [''.join(s.findAll(text=True)) for s in soup.findAll('p')]
 s = ''.join(text)
 
+stopwords = set(stopwords.words('english'))
+
 words = nltk.word_tokenize(s)
 words = [word.lower() for word in words if word.isalpha()]
 
-print(words)
+noStopWords = [w for w in words if not w in stopwords]
+
+print(noStopWords)
