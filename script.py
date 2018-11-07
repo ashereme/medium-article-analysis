@@ -27,6 +27,5 @@ def displayStopWords(article):
 
 	stopwordsUsed = [w for w in words if w in allStopwords]
 	fdist = nltk.FreqDist(stopwordsUsed)
-	
 
 getContent()
