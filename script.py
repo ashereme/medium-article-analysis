@@ -1,21 +1,32 @@
-
+import sys
 import requests
 import string
 import nltk
 from nltk.corpus import stopwords
 from bs4 import BeautifulSoup
 
-r = requests.get('https://medium.com/@jalajpunn/the-struggle-against-the-present-8a3b0a6123c8')
-soup = BeautifulSoup (r.content,features="html5lib")
+def getContent():
+	r = requests.get(sys.argv[1]) #Request for user specific web page
+	soup = BeautifulSoup(r.content,features="html5lib") #BeautifulSoup used for scraping text from HTML
 
-text = [''.join(s.findAll(text=True)) for s in soup.findAll('p')]
-s = ''.join(text)
+	#Need to clean the content
 
-stopwords = set(stopwords.words('english'))
+	article = [''.join(s.findAll(text=True)) for s in soup.findAll('p')]
+	article = ''.join(article)
 
-words = nltk.word_tokenize(s)
-words = [word.lower() for word in words if word.isalpha()]
+	#Will analyze and display various observations
 
-noStopWords = [w for w in words if not w in stopwords]
+	displayStopWords(article)
 
-print(noStopWords)
+def displayStopWords(article):
+	allStopwords = set(stopwords.words('english'))
+
+	#Tokenizing the words present in article/removing punctuation
+	words = nltk.word_tokenize(article)
+	words = [word.lower() for word in words if word.isalpha()]
+
+	stopwordsUsed = [w for w in words if w in allStopwords]
+	fdist = nltk.FreqDist(stopwordsUsed)
+	
+
+getContent()
