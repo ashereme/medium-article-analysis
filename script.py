@@ -16,7 +16,8 @@ def getContent():
 
 	#Will analyze and display various observations
 
-	displayStopWords(article)
+	print(article)
+	#displayStopWords(article)
 
 def displayStopWords(article):
 	allStopwords = set(stopwords.words('english'))
@@ -27,5 +28,19 @@ def displayStopWords(article):
 
 	stopwordsUsed = [w for w in words if w in allStopwords]
 	fdist = nltk.FreqDist(stopwordsUsed)
+
+	table = {}
+	for word, frequency in fdist.most_common(5):
+		table[word] = frequency
+
+	print('Most used stopwords : ', table)
+
+def displayPartOfSpeech(pos_type):
+
+	#Tokenizing the words present in article/removing punctuation
+	words = nltk.word_tokenize(article)
+	words = [word.lower() for word in words if word.isalpha()]
+
+	
 
 getContent()
