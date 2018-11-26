@@ -30,7 +30,7 @@ def displayStopWords(article):
 	fdist = nltk.FreqDist(stopwordsUsed)
 
 	table = {}
-	for word, frequency in fdist.most_common(5):
+	for word, frequency in fdist.most_common(5): 
 		table[word] = frequency
 
 	print('Most used stopwords : ', table)
