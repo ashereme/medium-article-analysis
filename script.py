@@ -22,7 +22,7 @@ def getContent():
 	#Remove punctuation and tokenize
 	onlyWords = removePunctuation(article)
 
-	#Possible pos_types for each pos_type
+	#Possible part of speech tags for each part of speech
 	nouns = ['NN','NNP','NNS','NNPS']
 	adj = ['JJ','JJR','JJS']
 	verbs = ['VB,VBD','VBD','VBG','VBN','VBP','VBZ']
