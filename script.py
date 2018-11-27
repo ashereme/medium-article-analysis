@@ -10,37 +10,55 @@ def getContent():
 	soup = BeautifulSoup(r.content,features="html5lib") #BeautifulSoup used for scraping text from HTML
 
 	#Need to clean the content
-
 	article = [''.join(s.findAll(text=True)) for s in soup.findAll('p')]
 	article = ''.join(article)
 
+	#Remove punctuation and tokenize
+	onlyWords = removePunctuation(article)
+
+	#Possible pos_types for each pos_type
+	nouns = ['NN','NNP','NNS','NNPS']
+	adj = ['JJ','JJR','JJS']
+	verbs = ['VB,VBD','VBD','VBG','VBN','VBP','VBZ']
+
 	#Will analyze and display various observations
+	displayStopWords(onlyWords)
+	displayPartOfSpeech(onlyWords,nouns,'nouns')
+	displayPartOfSpeech(onlyWords,adj,'adjs')
+	displayPartOfSpeech(onlyWords,verbs,'verbs')
 
-	print(article)
-	#displayStopWords(article)
-
-def displayStopWords(article):
+def displayStopWords(words):
 	allStopwords = set(stopwords.words('english'))
+	stopwordsUsed = [w for w in words if w in allStopwords]
+	
+	most_common = wordFrequency(stopwordsUsed,5) 
+	print('Most used stopwords :', most_common)
 
+def displayPartOfSpeech(words,pos_types,pos_type):
+	results = []
+
+	for word, pos in nltk.pos_tag(words):
+		for p_t in pos_types:
+			if (pos==p_t):
+				results.append(word)
+
+	most_common = wordFrequency(results,10)
+	print('Most used ',pos_type,':',most_common)
+
+#Removes punctuation from the article
+def removePunctuation(article):
 	#Tokenizing the words present in article/removing punctuation
 	words = nltk.word_tokenize(article)
 	words = [word.lower() for word in words if word.isalpha()]
+	return words
 
-	stopwordsUsed = [w for w in words if w in allStopwords]
-	fdist = nltk.FreqDist(stopwordsUsed)
-
+#Will display the top x most frequent words
+def wordFrequency(words,top_x): 
+	fdist = nltk.FreqDist(words)
 	table = {}
-	for word, frequency in fdist.most_common(5): 
+	for word,frequency in fdist.most_common(top_x):
 		table[word] = frequency
 
-	print('Most used stopwords : ', table)
-
-def displayPartOfSpeech(pos_type):
-
-	#Tokenizing the words present in article/removing punctuation
-	words = nltk.word_tokenize(article)
-	words = [word.lower() for word in words if word.isalpha()]
-
-	
+	return table
 
 getContent()
