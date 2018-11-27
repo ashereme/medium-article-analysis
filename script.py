@@ -6,7 +6,13 @@ from nltk.corpus import stopwords
 from bs4 import BeautifulSoup
 
 def getContent():
-	r = requests.get(sys.argv[1]) #Request for user specific web page
+	
+	try:
+		r = requests.get(sys.argv[1]) #Request for user specific web page
+	except:
+		print("This script requires a medium article URL!")
+		sys.exit(1)
+	
 	soup = BeautifulSoup(r.content,features="html5lib") #BeautifulSoup used for scraping text from HTML
 
 	#Need to clean the content
@@ -45,9 +51,8 @@ def displayPartOfSpeech(words,pos_types,pos_type):
 	most_common = wordFrequency(results,10)
 	print('Most used ',pos_type,':',most_common)
 
-#Removes punctuation from the article
+#Tokenizes the words in article and removes punctuation
 def removePunctuation(article):
-	#Tokenizing the words present in article/removing punctuation
 	words = nltk.word_tokenize(article)
 	words = [word.lower() for word in words if word.isalpha()]
 	return words
