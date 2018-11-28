@@ -8,8 +8,9 @@ from bs4 import BeautifulSoup
 def getContent():
 	
 	try:
-		url = sys.argv[1]
+		url = sys.argv[1] 
 		
+		#Checking if URL provided contains medium
 		if "medium" not in url:
 			print("Argument not a medium URL!")
 			return False
