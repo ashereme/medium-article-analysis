@@ -8,9 +8,15 @@ from bs4 import BeautifulSoup
 def getContent():
 	
 	try:
-		r = requests.get(sys.argv[1]) #Request for user specific web page
+		url = sys.argv[1]
+		
+		if "medium" not in url:
+			print("Argument not a medium URL!")
+			return False
+		
+		r = requests.get(url) #Request for user specific web page
 	except:
-		print("This script requires a medium article URL!")
+		print("Argument must be provided!")
 		sys.exit(1)
 	
 	soup = BeautifulSoup(r.content,features="html5lib") #BeautifulSoup used for scraping text from HTML
