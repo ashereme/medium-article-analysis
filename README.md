@@ -9,6 +9,7 @@ This script will be useful for both reader and writer. As a reader, you can infe
 <b>How to use it?</b>
 
 Simply compile the Python script and provide a medium article URL:
-    python script.py https://medium.com/@jalajpunn/the-start-of-new-chapter-57488c7d11aa
+
+`python script.py https://medium.com/@jalajpunn/the-start-of-new-chapter-57488c7d11aa`
 
 And watch the NLTK library analyze the article!
